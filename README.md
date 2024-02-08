@@ -4,6 +4,9 @@
 Prometheus-Vision is a project that utilizes depth cameras to capture depth values from the environment.
 And to classify objects using vision techniques.
 
+## Important 
+- DO NOT CHANGE any file or file points relating to pybackend,pyrealsense, and pyrsutils. It is related to pyrealsense2 setup.
+
 ## Usage
 ### Running getDepthValues.py
 To run the `getDepthValues.py` script, follow these steps:
@@ -23,4 +26,6 @@ To run the `getDepthValues.py` script, follow these steps:
 - scipy
 
 
-   
+## Dataset used
+- NYU Depth Dataset V2
+- You may see PotentialDataSetToUse.md for training on more datasets

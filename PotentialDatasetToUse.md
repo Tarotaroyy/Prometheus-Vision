@@ -27,7 +27,9 @@ Offers a broad range of object types and scenarios for comprehensive object clas
 Specifically designed for object recognition using RGB-D cameras, this dataset features objects in tabletop scenarios with depth and RGB images.
 ### Contents: 
 Over 300 objects categorized into 51 categories, with thousands of RGB-D images.
-Use Case: Perfect for object classification, especially for robotic applications where object manipulation and recognition are required.
+
+### Use Case: 
+Perfect for object classification, especially for robotic applications where object manipulation and recognition are required.
 
 ## 5. KITTI Vision Benchmark Suite
 ### Description: 

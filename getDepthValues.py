@@ -41,14 +41,8 @@ try:
         # Get depth values
         depth_data = get_depth(depth_frame)
 
-        # Save depth data to a file
-        np.save("depth_data.npy", depth_data)
-
-        # Display depth values for a region
-        # You can adjust the region or display the values in any other way as per your requirements
-        region_depth_values = depth_data[240:250, 320:330]  # Example region (10x10 around the center)
-        print("Region Depth Values:")
-        print(region_depth_values)
+        # Print depth values using vectorized operation
+        print(depth_data)
 
         # Break the loop by pressing 'q'
         if cv2.waitKey(1) & 0xFF == ord('q'):

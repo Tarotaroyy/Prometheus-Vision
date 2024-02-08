@@ -18,6 +18,9 @@ To run the `getDepthValues.py` script, follow these steps:
 ## Dependencies
 - Python 3.7
 - pyrealsense2 (built from source, and environment is already set up)
+- numpy
+- tensorflow
+- scipy
 
 
    

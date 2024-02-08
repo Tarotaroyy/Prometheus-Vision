@@ -2,13 +2,18 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 
-# Configure depth and color streams
+# Helper function to retrieve depth data
+def get_depth(depth_frame):
+    depth_data = np.asanyarray(depth_frame.get_data())
+    return depth_data
+
+# Initialize RealSense pipeline
 pipeline = rs.pipeline()
 config = rs.config()
 config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)  # Enable RGB stream
 
-# Start the pipeline
+# Start streaming
 pipeline.start(config)
 
 try:
@@ -16,20 +21,37 @@ try:
         # Wait for a coherent pair of frames: depth and color
         frames = pipeline.wait_for_frames()
         depth_frame = frames.get_depth_frame()
-        if not depth_frame:
-            continue
+        color_frame = frames.get_color_frame()
 
-        # Convert depth to a numpy array
+        # Convert depth frame to numpy array
         depth_image = np.asanyarray(depth_frame.get_data())
 
-        # Apply colormap on depth image (image must be converted to 8-bit per pixel first)
+        # Convert color frame to numpy array
+        color_image = np.asanyarray(color_frame.get_data())
+
+        # Visualize depth map
         depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
 
-        # Show depth data as an image
-        cv2.imshow('Depth Image', depth_colormap)
+        # Concatenate depth map and RGB image horizontally
+        combined_image = np.hstack((depth_colormap, color_image))
 
-        # Break loop with 'esc' key
-        if cv2.waitKey(1) == 27:
+        # Display combined image
+        cv2.imshow('Depth and RGB', combined_image)
+
+        # Get depth values
+        depth_data = get_depth(depth_frame)
+
+        # Save depth data to a file
+        np.save("depth_data.npy", depth_data)
+
+        # Display depth values for a region
+        # You can adjust the region or display the values in any other way as per your requirements
+        region_depth_values = depth_data[240:250, 320:330]  # Example region (10x10 around the center)
+        print("Region Depth Values:")
+        print(region_depth_values)
+
+        # Break the loop by pressing 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
 finally:
